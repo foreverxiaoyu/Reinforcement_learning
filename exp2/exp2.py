@@ -107,10 +107,10 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 
 capacity = 5000  # 经验池容量
 lr = 5e-4  # 学习率
-gamma = 0.98  # 折扣因子
+gamma = 0.98 # 折扣因子
 epsilon = 0.99  # 贪心系数
-epsilon_decay = 0.995  # 贪心系数衰减
-epsilon_min = 0.01  # 最小贪心系数
+epsilon_decay = 0.99  # 贪心系数衰减
+epsilon_min = 0.001  # 最小贪心系数
 target_update = 200  # 目标网络的参数的更新频率
 batch_size = 64
 n_hidden = 64  # 隐含层神经元个数
@@ -165,8 +165,8 @@ episodes_list = list(range(len(return_list)))
 plt.plot(episodes_list, return_list)
 plt.xlabel('Episodes')
 plt.ylabel('Returns')
-plt.title('DQN Returns')
-plt.show()
+plt.title(f'DQN,lr={agent.learning_rate},gamma={agent.gamma},epsilon={agent.epsilon},capacity={capacity}')
+
 
 # 评价指标
 returns = np.array(return_list)
@@ -187,3 +187,11 @@ print(f'Episodes to Convergence: {episodes_to_convergence}')
 print(f'Max Reward: {np.max(returns)}')
 print(f'Min Reward: {np.min(returns)}')
 print(f'Standard Deviation of Reward: {np.std(returns)}')
+
+# 绘制收敛速度，放在右下角
+# plt.axhline(average_reward, color='r', linestyle='--', label='Average Reward')
+plt.axvline(episodes_to_convergence, color='g', linestyle='--', label=f'Episodes to Convergence: {episodes_to_convergence}')
+plt.axhline(int(np.std(returns)), color='r', linestyle='--', label=f'Std:{int(np.std(returns))}')
+plt.legend(loc='lower right')
+
+plt.show()
