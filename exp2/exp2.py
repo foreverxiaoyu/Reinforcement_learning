@@ -129,7 +129,7 @@ agent = DQN(n_states=n_states, n_hidden=n_hidden, n_actions=n_actions, learning_
             epsilon_decay=epsilon_decay, epsilon_min=epsilon_min, target_update=target_update, device=device)
 
 # 训练模型
-for i in range(2000):
+for i in range(1000):
     state = env.reset()[0]
     episode_return = 0
     done = False
